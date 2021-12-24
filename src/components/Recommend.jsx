@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
 import Destination2 from "../assets/Destination2.png";
@@ -54,16 +54,138 @@ const Recommend = (props) => {
       duration: "Approx 3 night 2 day trip",
     },
   ];
+  const packages = [
+    "The Weekend Break",
+    "The Package Holiday",
+    "The Group Tour",
+    "Long Term Slow Travel",
+  ];
 
+  const  [active,setActive] = useState(1);
   return (
 
     <Fragment>
+      <Section id="recommend">
+        <div className="title">
+          <h2>Recommend Destinations</h2>
+        </div>
 
+        <div className="packages">
+          <ul>
+            {
+              packages.map((pkg,index) => {
+                return (
+                  <li className={active === index+1 ? "active":""}
+                  onClick={ () => setActive(index+1) } key={index}>
+                    {pkg}
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+
+        <div className="destinations">
+          {
+            data.map( (destionation, index) => {
+              return (
+                <div className="destination" key={index}>
+                  <img src={destionation.image} alt={destionation.title}/>
+                  <h3>{destionation.title}</h3>
+                  <p>{destionation.subTitle}</p>
+                  <div className="info">
+                    <div className="services">
+                      <img src={info1} alt=""/>
+                      <img src={info2} alt=""/>
+                      <img src={info3} alt=""/>
+                    </div>
+                    <h4>{destionation.cost}</h4>
+                  </div>
+                  <div className="distance">
+                    <span>1000 kms</span>
+                    <span>{destionation.duration}</span>
+                  </div>
+                </div>
+              )
+            } )
+          }
+        </div>
+
+      </Section>
     </Fragment>
 
   );
 }
 
+
+const Section = styled.section`
+  padding: 2rem 0;
+  .title{
+    text-align: center;
+  }
+  
+  .packages{
+    display: flex;
+    justify-content: center;
+    margin:2rem 0;
+    
+    ul{
+      display: flex;
+      list-style-type: none;
+      width: max-content;
+      li{
+        padding: 1rem 2rem;
+        border-bottom: 0.1rem solid black;
+      }
+      .active{
+        border-bottom: 0.5rem solid #8338ec;
+      }
+    }
+  }
+  
+  .destinations{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 3rem;
+    padding: 0 3rem;
+    
+    .destination{
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background-color: #8338ec14;
+      border-radius: 1rem;
+      transition: 0.3s ease-in-out;
+      &:hover{
+        transform: translateX(0.4rem) translateY(-1rem);
+        box-shadow: rgba(0,0,0,0.35) 0 5px 15px;
+      }
+      img{
+        width: 100%;
+      }
+      .info{
+        display: flex;
+        align-items: center;
+        .services{
+          display: flex;
+          gap: 0.3rem;
+          img{
+            width: 2rem;
+            border-radius: 1rem;
+            background-color: #4d2ddb84;
+            padding: 0.2rem 0.4rem;
+          }
+        }
+        justify-content: space-between;
+      }
+      .distance{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+`;
 
 
 

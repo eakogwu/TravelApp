@@ -38,9 +38,9 @@ const Services = (props) => {
     <Fragment>
       <Section id="services">
         {
-          data.map((service) => {
+          data.map((service,index) => {
             return (
-              <div className="service">
+              <div className="service" key={index}>
                 <div className="icon">
                   <img src={service.icon} alt={service.title}/>
                 </div>
